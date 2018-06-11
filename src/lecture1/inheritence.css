@@ -1,0 +1,23 @@
+.error, .warning, .success {
+  font-family: Arial, sans-serif;
+  font-size: 12px;
+  text-align: center;
+  padding: 20px;
+  margin: 20px;
+  border: 1px solid orange;
+  font-weight: bold;
+}
+
+.success {
+  background-color: green;
+}
+
+.warning {
+  background-color: yellow;
+}
+
+.error {
+  background-color: red;
+}
+
+/*# sourceMappingURL=inheritence.css.map */
