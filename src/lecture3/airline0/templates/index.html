@@ -1,5 +1,29 @@
 {% extends 'layout.html' %}
 {% block title %} home {% endblock title %}
 {% block content %}
-<h1>Home</h1>
+<h1>FLIGHTS</h1>
+
+{% if flights %}
+<ul>
+   {% for flight in flights %}
+   <li>
+      A flight from 
+      <span style="color:red;">{{ flight.origin }}</span> to {{ flight.destination }} is {{ flight.duration }} minutes.
+   </li>
+   {% endfor %}
+</ul>
+{% else %}
+<h2><a href="{{ url_for('add') }}"> Book </a> a flight</h2>.
+{% endif %}
+
+<h1>Passengers</h1>
+<ul>
+   {% for passenger in passengers %}
+   <li>
+      {{ passenger.name }} booked flight: {{ passenger.flight_code }}
+   </li>
+   {% endfor %}
+</ul>
+
+<h2><a href="{{ url_for('book') }}"> Book </a> a flight</h2>.
 {% endblock content %}

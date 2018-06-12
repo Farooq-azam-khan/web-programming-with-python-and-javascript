@@ -1,0 +1,21 @@
+{% extends 'layout.html' %}
+{% block title %} book flight {% endblock title %}
+{% block content %}
+<form action='{{ url_for('book') }}' method="post">
+   <input name="name" placeholder="name" type="text" />
+   <input name="flight_code" placeholder="which flight number?" type="integer" />
+   <button>submit</button>
+</form>
+
+<!-- <ul>
+   {% for flight in flights %}
+   <li>
+      {{flight.id }}: is a flight from <span style="color:blue;">{{ flight.origin }}</span> to <span style="color:red;">{{ flight.destination}}</span>
+      and it will take <em>{{ flight.duration }}</em> minutes. 
+   </li>
+   {% endfor %}
+</ul> -->
+
+
+
+{% endblock content %}
