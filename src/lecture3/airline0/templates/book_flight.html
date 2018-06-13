@@ -1,21 +1,21 @@
 {% extends 'layout.html' %}
 {% block title %} book flight {% endblock title %}
 {% block content %}
-<form action='{{ url_for('book') }}' method="post">
-   <input name="name" placeholder="name" type="text" />
-   <input name="flight_code" placeholder="which flight number?" type="integer" />
-   <button>submit</button>
+
+<h1>Book a Flight</h1>
+
+<form class="form-inline" action='{{ url_for('book') }}' method='post'>
+  <div class="form-group mb-2">
+    <input type="text" class="form-control" placeholder="name" name="name">
+  </div>
+  <div class="form-group mx-sm-3 mb-2">
+     <select class="form-control" name="flight_id">
+        {% for flight in flights %}
+            <option value="{{ flight.id }}">{{ flight.origin}} to {{ flight.destination }} <span class="display-3">{{ flight.duration }} min</span></option>
+        {% endfor %}
+     </select>
+  </div>
+  <button type="submit" class="btn btn-primary mb-2">Book Flight</button>
 </form>
-
-<!-- <ul>
-   {% for flight in flights %}
-   <li>
-      {{flight.id }}: is a flight from <span style="color:blue;">{{ flight.origin }}</span> to <span style="color:red;">{{ flight.destination}}</span>
-      and it will take <em>{{ flight.duration }}</em> minutes. 
-   </li>
-   {% endfor %}
-</ul> -->
-
-
 
 {% endblock content %}
