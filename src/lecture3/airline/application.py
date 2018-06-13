@@ -37,6 +37,17 @@ def book():
         # db.execute("INSERT INTO passengers (name, flight_code) VALUES ('khan', 1)")
         # db.commit()
     return render_template("book_flight.html", flights=flights)
+
+@app.route("/flights")    
+def flights():
+    flights = db.execute("SELECT * FROM flights").fetchall()
+    return render_template("flights.html", flights=flights)
     
+@app.route("/flights/<int:flight_id>")    
+def flight(flight_id):
+    f_id = {'flight_id':flight_id}
+    flight = db.execute("SELECT * FROM flights WHERE id=:flight_id", f_id).fetchone()
+    passengers = db.execute("SELECT * FROM passengers WHERE flight_code=:flight_id", f_id).fetchall()
+    return render_template("flight.html", flight=flight, passengers=passengers)
 if __name__ =="__main__":
     app.run(debug=True)
