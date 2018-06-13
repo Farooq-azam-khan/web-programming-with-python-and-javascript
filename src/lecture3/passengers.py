@@ -12,7 +12,7 @@ def create_passenger_db():
     db.execute("""
         CREATE TABLE passengers
         (
-            id INTEGER UNIQUE PRIMARY KEY,
+            id INTEGER PRIMARY KEY AUTOINCREMENT,
             name VARCHAR NOT NULL, 
             flight_code INTEGER REFERENCES flights
         );
@@ -67,24 +67,42 @@ def select_passenger_db():
         print(f"{flight.id}: {flight.origin} to {flight.destination} in {flight.duration}")
     
     flight_id = int(input("\nF-ID: "))
-    flight = db.execute("SELECT origin, destination, duration FROM flights WHERE id=:id",
-    {"id": flight_id})
-    print("flight:", flight)
     
-    if flight is None:
+    flight = db.execute('''
+        SELECT * FROM flights WHERE id=:id;
+    ''', {'id':flight_id}).fetchall()
+    # print("flight:", flight)
+    
+    if len(flight)==0 or len(flight)>1:
         print("error, give valid fid")
         return 
     
     
-    passenger = db.execute("""
-        SELECT name FROM passengers WHERE flight_code = :flight_id
-        """, {"flight_id":flight_id}).fetchall()
-    print(passenger)
+    print("fetching the passengers from flight_id:", flight_id)
+    
+    passengers = db.execute('''
+        SELECT * FROM passengers WHERE flight_code=:flight_id;
+    ''', {'flight_id':flight_id}).fetchall()
+    
+    # print(passengers)
+    
+    print("-"*100)
+    print("-"*100)    
+    flight = flight[0]
+    print(f"A flight from {flight.origin} to {flight.destination} will take {flight.duration}")
+    print("-"*100)
+    print("The passengers of this flight are:")
+    
+    if len(passengers) == 0:
+        print("There are no passengers on this flight")
+    else:
+        for passenger in passengers:
+            print(f"{passenger.name}")
     
 
 if __name__ == "__main__":
 
     # db.execute("DROP TABLE passengers")
     # create_passenger_db()
-    insert_passengers_db()
+    # insert_passengers_db()
     select_passenger_db()

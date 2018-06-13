@@ -33,9 +33,6 @@ def main():
     db.commit()
     f.close()
     
-    
-    
-    
 if __name__ == "__main__":
     main()
     select_db()

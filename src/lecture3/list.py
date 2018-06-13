@@ -13,15 +13,15 @@ db = scoped_session(sessionmaker(bind=engine)) # bind engine to database
 def create_db():
     # TODO : autoincrement needed
     # Note: postgersql is not being used here, thus SERIAL has a different name
-    db.execute("""
+    db.execute('''
         CREATE TABLE flights
         (
-          id INTEGER UNIQUE PRIMARY KEY,
+          id INTEGER PRIMARY KEY AUTOINCREMENT,
           origin VARCHAR NOT NULL,
           destination VARCHAR NOT NULL,
           duration INTEGER NOT NULL
           );
-    """)
+    ''')
     db.commit()
 
 # insert values into database and commit them     
@@ -77,11 +77,10 @@ def main():
         print(f"{fl.id}: {fl.origin} to {fl.destination}, {fl.duration} min")
 
 if __name__ == '__main__':
-    db.execute("DROP TABLE flights")
-    create_db()
-    insert_db()
     main()
-    db.execute("DELETE FROM flights WHERE id=3")
-    db.execute("INSERT INTO flights (origin, destination, duration) VALUES ('TEST', 'test2', 10)")
-    db.commit()
-    main()
+    # db.execute("DROP TABLE flights")
+    # create_db()
+    # insert_db()
+    # db.execute("DELETE FROM flights WHERE id=3")
+    # db.execute("INSERT INTO flights (origin, destination, duration) VALUES ('TEST', 'test2', 10)")
+    # db.commit()
