@@ -1,0 +1,25 @@
+{% extends 'layout.html' %}
+
+{% block content %}
+<h1> All professors in all Univesities</h1>
+{% if professors %}
+<ul>   
+   {% for professor in professors %}
+   <li>
+      <!--  fix this link -->
+      <a hef="{{ url_for('university', university_name=professor.name) }}">
+         {{ professor.name }}
+      </a>
+      <br />
+      <a href="{{ url_for('professor', university_name=professor.name, professor_name=professor.l_name) }}">
+         {{ professor.f_name }} {{ professor.l_name}} <br />
+      </a>      
+   </li>
+   {% endfor %}
+</ul>
+{% else %}
+<p>
+   There are no professors here to display.
+</p>
+{% endif %}
+{% endblock content %}

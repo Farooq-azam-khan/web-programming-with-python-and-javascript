@@ -1,0 +1,20 @@
+{% extends 'layout.html' %}
+
+{% block content %}
+   {% if publication %}
+   <h1> {{ publication.title }} by {{ professor.f_name}} {{ professor.l_name}} </h1>
+   <h2>On some date.</h2>
+      <p>
+         {{ publication.content }}
+      </p>
+      <p>
+         Other publications by this author can be found
+         <a hef="{{ url_for('professor', professor_name=professor.l_name) }}">here</a>.
+      </p>
+   {% else %}
+      <p>
+         Did not find any publications with this name, bad link. 
+      </p>
+   {% endif %}
+   </ul>
+{% endblock content %}

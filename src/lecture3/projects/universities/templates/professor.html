@@ -1,0 +1,36 @@
+{% extends 'layout.html' %}
+
+{% block content %}
+<h1> {{ professor.f_name }}, {{ professor.l_name }} </h1>
+
+<h2> Courses </h2>
+{% if courses %}
+   <ul>
+      
+      {% for course in courses %}
+         <li> {% if university %}<a href="{{ url_for('course', university_name=university.name, course_code=course.course_code) }}">
+            {{ course.name }}, {{ course.course_code }}
+         </a></li> {% else %} <li>
+            {{ course.name }}, {{ course.course_code }}
+         </li> {% endif %}
+      {% endfor %}
+   </ul>
+{% else %}
+<p>
+   {{ professor.f_name }} {{ professor.l_name }} is not teaching any courses at the moment. 
+</p>
+{% endif %}
+
+<h2>Publications </h2>
+{% if publications %}
+   {% for publication in publications %}
+      <li><a href="{{ url_for('publication', professor_name=professor.l_name, publication_id=publication.id) }}">
+         {{ publication.title }}</a> </li>
+   {% endfor %}
+{% else %}
+   <p>
+      {{ professor.f_name }} {{ professor.l_name }} does not have any publications.
+   </p>
+{% endif %}
+</ul>
+{% endblock content %}

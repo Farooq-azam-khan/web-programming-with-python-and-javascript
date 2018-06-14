@@ -1,0 +1,11 @@
+{% extends 'layout.html' %}
+
+{% block content %}
+<h1> {{ course.name }} | {{ course.course_code }}</h1>
+<p>
+   This course is about (insert description here). It is taught by 
+   <a href="{{ url_for('professor', university_name=university.name, professor_name=professor.l_name)}}">
+      {{ professor.f_name }} {{ professor.l_name }}.
+   </a>
+</p>
+{% endblock content %}

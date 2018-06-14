@@ -1,0 +1,14 @@
+{% extends 'layout.html' %}
+
+{% block content %}
+<h1> Professors </h1>
+<ul>
+{% for professor in professors %}
+   <li>
+      <a href="{{ url_for('professor', university_name=university.name, professor_name=professor.l_name) }}">
+      <strong>{{ professor.f_name }}, {{ professor.l_name }}</strong> | <em>{{ professor.email }}</em>
+      </a>
+   </li>
+{% endfor %}
+</ul>
+{% endblock content %}

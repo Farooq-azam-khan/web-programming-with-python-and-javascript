@@ -1,0 +1,23 @@
+{% extends 'layout.html' %}
+
+{% block content %}
+<h1> All courses in all Univesities</h1>
+{% if courses %}
+<ul>   
+   {% for course in courses %}
+   <li>
+      <a hef="{{ url_for('university', university_name=course.name) }}">
+         {{ course.name }}
+      </a>
+      <br />
+      {{ course }} <br />
+      {{ course.course_code }}, <a href="#">enroll</a>.
+   </li>
+   {% endfor %}
+</ul>
+{% else %}
+<p>
+   There are no courses here to display.
+</p>
+{% endif %}
+{% endblock content %}

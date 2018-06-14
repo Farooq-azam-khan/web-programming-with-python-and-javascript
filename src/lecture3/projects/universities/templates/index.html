@@ -1,0 +1,17 @@
+{% extends 'layout.html' %}
+
+{% block content %}
+<h1> Home </h1>
+
+<ul>
+{% for university in universities %}
+<li>
+   <a href="{{ url_for('university', university_name=university.name) }}">
+      <strong>{{ university.name }}</strong>, motto: <em>{% if university.motto %} {{ university.motto }}</em>{% endif %}
+      <a href="#">enroll</a>
+   </a>
+</li>
+{% endfor %}
+</ul>
+
+{% endblock content %}
