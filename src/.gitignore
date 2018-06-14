@@ -1,5 +1,5 @@
-../Include/
-../Lib/
-../Scripts/
-../pip-selfcheck.json
-../tcl/
+*/Include/*
+*/Lib/*
+*/Scripts/*
+*/pip-selfcheck.json
+*/tcl/*
