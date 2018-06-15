@@ -1,18 +1,24 @@
 from flask import Flask, request, render_template
-from flask_sqlalchemy import SQLAlchemy
-
 
 app = Flask(__name__)
-app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///..\\orm_flights.db'
+app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///airline2.db'
 app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
-db = SQLAlchemy(app)
 
+# models
+from flask_sqlalchemy import SQLAlchemy
+
+db = SQLAlchemy(app)
 class Flight(db.Model):
     __tablename__ = "flights"
     id = db.Column(db.Integer, primary_key=True)
     origin = db.Column(db.String, nullable=False)
     destination = db.Column(db.String, nullable=False)
     duration = db.Column(db.Integer, nullable=False)
+    
+    def add_passenger(self, name):
+        p = Passenger(name=name, flight_id=self.id)
+        db.session.add(p)
+        db.session.commit()
     
     def __repr__(self):
         return f'<Flight {self.origin} {self.destination}>'
@@ -34,6 +40,15 @@ def index():
     flights = Flight.query.all()
     return render_template("index.html", flights=flights, passengers=passengers)
 
+@app.route('/flights/create', methods=['POST', 'GET'])
+def create_flight():
+    if request.method == 'POST':
+        origin = request.form.get('origin')
+        destination = request.form.get('destination')
+        duration = int(request.form.get('duration'))
+        db.session.add(Flight(origin=origin, duration=duration, destination=destination))
+        db.session.commit()
+    return render_template('create_flight.html')
 @app.route("/flights/<int:flight_id>")
 def flight(flight_id):
     flight = Flight.query.get(flight_id)
@@ -59,13 +74,11 @@ def book():
             return render_template("error.html", message="No such flight exist.")
     
         # add passenger
-        passenger = Passenger(name=name, flight_id=flight_id)
-        db.session.add(passenger)
-        db.session.commit()
+        flight.add_passenger(name=name)
     flights = Flight.query.all()
     return render_template("book.html", flights=flights)
     
 if __name__ == '__main__':
     with app.app_context():
-        db.create_all()
+        # db.create_all()
         app.run(debug=True)
