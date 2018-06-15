@@ -1,0 +1,20 @@
+{% extends 'layout.html' %}
+{% block title %} create author {% endblock title %}
+{% block content %}
+
+<h1>Create an Author</h1>
+
+<form class="form-inline" action='{{ url_for('create_author') }}' method='post'>
+  <div class="form-group mb-2">
+    <input type="text" class="form-control" placeholder="first name" name="f_name">
+  </div>
+  <div class="form-group mb-2">
+    <input type="text" class="form-control" placeholder="last name" name="l_name">
+  </div>
+  <div class="form-group mb-2">
+    <input type="text" class="form-control" placeholder="email" name="email">
+  </div>
+  <button type="submit" class="btn btn-primary mb-2">Create Author</button>
+</form>
+
+{% endblock content %}

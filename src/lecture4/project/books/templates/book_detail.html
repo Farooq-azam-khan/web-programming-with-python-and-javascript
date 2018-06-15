@@ -1,0 +1,23 @@
+{% extends 'layout.html' %}
+{% block title %}
+   {% if book %} 
+      {{ book.title }} {% else %} DNE 
+   {% endif %}
+{% endblock title %}
+
+{% block content %}
+
+{% if book %}
+<h1>{{ book.title }} by {{ book.author_id }}</h1>
+<h3><a href="{{ url_for('update_book', book_id=book.id) }}">Update</a></h3>
+<h2>{{ book.subtitle }}</h2>
+   <p>
+      {{ book.summary }}
+   </p>
+{% else %}
+   <p>
+      This book does not exist. 
+   </p>
+{% endif %}
+{% endblock content %}
+

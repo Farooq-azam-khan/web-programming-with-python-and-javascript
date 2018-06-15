@@ -1,0 +1,36 @@
+{% extends 'layout.html' %}
+{% block title %} home {% endblock title %}
+{% block content %}
+
+{% if authors %}
+<h1>AUTHORS</h1>
+<ul>
+{% for author in authors %}
+   <li>{{ author.f_name }}, {{ author.l_name }}</li>
+   <ul>
+      {% if books %}
+      {% for book in books %}
+         {% if book.author_id == author.id %}
+            <li>
+               {{ book.title }}
+               {% if book.subtitle %}{{ book.subtitle }} {% endif %}
+               <br />
+               {{ book.summary }}
+            </li>
+         {% endif %}
+      {% endfor %}
+   </ul>
+   {% else %}
+   <p>
+      There are no books to display for this author. 
+   </p>
+   {% endif %}
+{% endfor %}
+</ul>
+{% else %}
+<p>
+   There are no authors to display. 
+</p>
+{% endif %}
+
+{% endblock content %}

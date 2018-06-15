@@ -1,0 +1,30 @@
+{% extends 'layout.html' %}
+{% block title %}
+   {% if author %} 
+      {{ author.f_name }} {{ author.l_name }} {% else %} DNE 
+   {% endif %}
+{% endblock title %}
+
+{% block content %}
+
+{% if author %}
+<h1>{{ author.f_name }} {{ author.l_name }}</h1>
+<h3><a href="{{ url_for('update_author', author_id=author.id) }}">Update</a></h3>
+   {% for book in author.books %}
+   <li>
+      <a href="{{ url_for('book_detail', book_id=book.id) }}">
+         {{ book.title }} {{ book.subtitle }}
+         {{ book.publication_year }}
+      </a>
+   </li>
+   {% endfor %}
+{% else %}
+   <p>
+      This author does not exist, 
+      <a href="{{ url_for('create_author') }}">
+         add the author
+      </a>.
+   </p>
+{% endif %}
+{% endblock content %}
+
