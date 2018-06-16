@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html>
+<head>
+   <title>counter2.html</title>
+   <script>
+      document.addEventListener('DOMContentLoaded',  function() {
+         document.querySelector('button').onclick = count; 
+      })
+      let counter = 0
+      function count()
+      {
+         counter++;
+         document.querySelector("#counter").innerHTML = counter; 
+         if (counter % 10 === 0)
+         {
+            document.querySelector("#message").innerHTML = `-> Counter is at ${counter}.`
+         }
+      }
+   </script>
+</head>
+<body>
+   <h1>counter2.html</h1>
+   <h2 id="counter">0</h2>
+   <h3>Message:</h3>
+   <h3 id="message">-> Counter is at 0.</h3>
+   <button>count</button>
+   <button>dont count</button>
+</body>
+</html>

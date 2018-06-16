@@ -65,12 +65,18 @@ class Review(db.Model):
         review = Review.query.get(id)
         db.session.delete(review)
         db.session.commit()
+        
+    def to_dict(self):
+        return {
+        "id":self.id,
+        "title":self.title,
+        "content":self.content,
+        "rating":self.rating
+        }
     
     def __repr__(self):
         return f'<Review {self.title}>'
         
-
-# TODO: create database
 class Book(db.Model):
     __tablename__ = 'books'
     id = db.Column(db.Integer, primary_key=True)
@@ -81,6 +87,16 @@ class Book(db.Model):
     year_published = db.Column(db.Integer, nullable=False)
     author_id = db.Column(db.Integer, db.ForeignKey('authors.id'), nullable=False)
     
+    def to_dict(self):
+        return {
+            "id": self.id,
+            "title": self.title,
+            "subtitle": self.subtitle,
+            "summary": self.summary,
+            "publisher": self.publisher,
+            "year_published": self.year_published
+        }
+        
     def add_review(self, title, content, rating):
         review = Review(title=title, book_id=self.id, content=content, rating=rating)
         db.session.add(review)
@@ -98,14 +114,23 @@ class Author(db.Model):
     bio     = db.Column(db.String, nullable=True)
     books   = db.relationship('Book', backref='author', lazy=True)
     
+    def to_dict(self):
+        return {
+        "id": self.id,
+        "f_name":self.f_name,
+        "l_name":self.l_name,
+        "email":self.email,
+        "bio":self.bio
+        }
+    
     def add_book(self, title, year_published, subtitle='', summary='', publisher=''):
-        b = Book(title=title, 
+        book = Book(title=title, 
                 year_published=year_published, 
                 subtitle=subtitle, 
                 summary=summary, 
                 publisher=publisher, 
                 author=self.id)
-        db.session.add(b)
+        db.session.add(book)
         db.session.commit()
             
     def __repr__(self):
@@ -120,12 +145,12 @@ def index():
 
 @app.route('/register')    
 def register():
-    return '<h1> not yet implemented </h1>'
+    return render_template('register.html')
 
 @app.route('/login')
 @app.route('/signin')
 def login():
-    return '<h1> not yet implemented </h1>'
+    return render_template('login.html')
 
 @app.route('/signup')
 def signup():
@@ -175,17 +200,17 @@ def update_book(book_id):
     book = Book.query.get(book_id)
     authors = Author.query.all()
     if request.method == 'POST':
-        title           = request.form.get('title')
-        subtitle        = request.form.get('subtitle')
-        summary         = request.form.get('summary')
-        publisher       = request.form.get('publisher')
-        year_published  = int(request.form.get('year_published'))
-        author_id         = request.form.get('author_id')
-        book.title = title
-        book.subtitle = subtitle 
-        book.publisher = publisher
+        title               = request.form.get('title')
+        subtitle            = request.form.get('subtitle')
+        summary             = request.form.get('summary')
+        publisher           = request.form.get('publisher')
+        year_published      = int(request.form.get('year_published'))
+        author_id           = request.form.get('author_id')
+        book.title          = title
+        book.subtitle       = subtitle 
+        book.publisher      = publisher
         book.year_published = year_published
-        book.author_id = author_id
+        book.author_id      = author_id
         db.session.commit()
     return render_template('update_book.html', book=book, authors=authors)
 
@@ -261,7 +286,7 @@ def update_review(review_id):
         content = request.form.get('content')
         rating = int(request.form.get('rating'))
         
-        if rating > 10 and rating < 0:
+        if rating > 10 or rating < 0:
             return render_template('error.html', message='invalid rating.')
         
         review.update(id=review.id, title=title, content=content, rating=rating)
@@ -274,59 +299,21 @@ def delete_review(review_id):
 # TODO: Implement your own api (jsonify)
 @app.route('/api')
 def api():
-    books = Book.query.all()
-    books_l = []
-    for book in books: 
-        author = Author.query.get(book.author_id)
-        books_l.append({
-            'title':book.title,
-            'subtitle':book.subtitle,
-            'publisher':book.publisher,
-            'year_published': book.year_published,
-            'author': {
-                    'f_name': author.f_name,
-                    'l_name':author.l_name,
-                    'email': author.email
-            }
-        
-        })
+    books_q   = Book.query.all()
+    authors_q = Author.query.all()
+    reviews_q = Review.query.all()
     
-    authors = Author.query.all()
-    authors_l = []    
-    for author in authors:
-        a_books = author.books
-        a_books_l = []
-        for a_book in a_books:
-            a_books_l.append({
-                            'title':book.title,
-                            'subtitle':book.subtitle,
-                            'publisher':book.publisher,
-                            'year_published': book.year_published
-            })
-            
-        authors_l.append({
-                        'f_name': author.f_name,
-                        'l_name':author.l_name,
-                        'email': author.email,
-                        'books': a_books_l
-        })
-        
-    reviews = Review.query.all()
-    reviews_l = []
-    for review in reviews:
-        r_book = Book.query.get(review.book_id)
-        reviews_l.append({
-                        'title': review.title,
-                        'content': review.content,
-                        'rating': review.rating,
-                        'book': {
-                            'title':r_book.title,
-                            'subtitle':r_book.subtitle,
-                            'publisher':r_book.publisher,
-                            'year_published': r_book.year_published
-                        }
-        })
-    return jsonify({'books':books_l, 'authors': authors_l, 'reviews':reviews_l})
+    books = []
+    authors = []
+    reviews = []
+    for book in books_q:
+        books.append(book.to_dict())
+    for author in authors_q:
+        authors.append(author.to_dict())
+    for review in reviews_q:
+        reviews.append(review.to_dict())
+    
+    return jsonify({'books':books, 'authors':authors, 'reviews':reviews})
     
 @app.route('/api/users')
 def api_users():
@@ -346,22 +333,15 @@ def api_user_review(user_email, review_id):
 
 @app.route('/api/reviews')
 def api_reviews():
-    reviews = Review.query.all()
-    reviews_l = []
-    for review in reviews:
-        r_book = Book.query.get(review.book_id)
-        reviews_l.append({
-                        'title': review.title,
-                        'content': review.content,
-                        'rating': review.rating,
-                        'book': {
-                            'title':r_book.title,
-                            'subtitle':r_book.subtitle,
-                            'publisher':r_book.publisher,
-                            'year_published': r_book.year_published
-                        }
-        })
-    return jsonify({'reviews':reviews_l})
+    reviews_q = Review.query.all()
+    reviews = []     
+    for review in reviews_q:
+        book = Book.query.get(review.book_id)
+        review = review.to_dict()
+        review['book'] = book.to_dict()
+        reviews.append(review)
+    
+    return jsonify({'reviews':reviews})
     
 @app.route('/api/reviews/<int:review_id>')
 def api_review(review_id):
@@ -372,39 +352,78 @@ def api_review(review_id):
     book = Book.query.get(review.book_id)
     author = Author.query.get(book.author_id)
     
-    return jsonify({
-                    'title': review.title,
-                    'content': review.content,
-                    'rating': review.rating,
-                    'book': {
-                            'title': book.title,
-                            'subtitle': book.subtitle,
-                            'summary': book.summary,
-                            'author': {
-                                    'f_name': author.f_name,
-                                    'l_name': author.l_name,
-                                    'email': author.email
-                            }
-                    }
-                })
+    review = review.to_dict()
+    review['book'] = book.to_dict()
+    review['author'] = author.to_dict()
+    
+    return jsonify({'review': review})
     
 @app.route('/api/authors')
 def api_authors():
-    return 'TODO: return authors'
+    authors_q = Author.query.all()
+    authors = []
+    for author in authors_q:
+        books = []
+        for book in Book.query.filter_by(author_id=author.id):
+            books.append(book.to_dict())
+        authors.append({
+                            'author':author.to_dict(),
+                            'books':books        
+        })
+    return jsonify({'authors':authors})
 
+@app.route('/api/authors/<int:author_id>')
+def api_author(author_id):
+    author = Author.query.get(author_id)
+    books_q = Book.query.filter_by(author_id=author.id).all()
+    books = []
+    for book in books_q:
+        books.append(book.to_dict())
+    author = author.to_dict()
+    author['books'] = books
+    return jsonify({'author':author})
+
+@app.route('/api/authors/<int:author_id>/<int:book_id>')
+def api_author_book(author_id, book_id):
+    author = Author.query.get(author_id)
+    book = Book.query.get(book_id)
+    author = author.to_dict()
+    reviews = []
+    reviews_q = Review.query.filter_by(book_id=book.id)
+    for review in reviews_q:
+        reviews.append(review.to_dict())
+    book = book.to_dict()
+    book['reviews'] = reviews
+    return jsonify({'author':author,'book':book})
+
+@app.route('/api/authors/<int:author_id>/<int:book_id>/<int:review_id>')
+def api_author_book_review(author_id, book_id, review_id):
+    author = Author.query.get(author_id)
+    book = Book.query.get(book_id)
+    review = Review.query.get(review_id)
+    
+    author = author.to_dict()
+    book = book.to_dict()
+    review = review.to_dict()
+    return jsonify({'author':author, 'book': book, 'review': review})
+    
 @app.route('/api/books')
 def api_books():
-    return 'todo: return books'
-    
-# more api links 
-'''
-/api/authors/<int:author_id>/books
-/api/authors/<int:author_id>/books/<int:book_id>
-/api/authors/<int:author_id>/books/<int:book_id>/reviews
-/api/books/<int:book_id>
-/api/books/<int:book_id>/reviews
-...
-'''
+    books = []
+    books_q = Book.query.all()
+    for book in books_q:
+        reviews_q = Review.query.filter_by(book_id=book.id).all()
+        reviews = []
+        for review in reviews_q:
+            reviews.append(review.to_dict())
+        author = Author.query.get(book.author_id)
+        author = author.to_dict()
+        book = book.to_dict()
+        book['author'] = author
+        book['reviews'] = reviews
+        books.append(book)
+    return jsonify({'books':books})
+
 
 if __name__ == '__main__':
     with app.app_context():

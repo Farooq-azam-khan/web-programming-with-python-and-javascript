@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html>
+<head>
+   <title>task2.html</title>
+   <script>
+      document.addEventListener("DOMContentLoaded", function() {
+         document.querySelector("#submit").disable = true;
+         document.querySelector('#task').onkeyup = () => {
+            if(document.querySelector('#task').value.length > 0)
+            {
+               document.querySelector('#submit').disable = false;
+            }
+            else
+            {
+               document.querySelector('#submit').disable=true;
+            }
+         };
+         document.querySelector('#new-task').onsubmit = () => {
+            const li = document.createElement('li');
+            li.innerHTML = document.querySelect('#task').value;
+            
+            document.querySelector('#tasks').append(li);
+            
+            document.querySelect('#task') = '';
+            document.querySelect('#submit') = true; 
+            return false; 
+         }         
+      }) 
+   </script>
+</head>
+<body>
+   <h1>Task2.html</h1>
+   <h1>Task</h1>
+   <ul id="tasks"></ul>
+   <form id="new-task">
+      <input id="task" autocomplete="off" atuofocus type="text" placeholder="New Task" />
+      <!-- <input type="submit" id="submit" /> -->
+      <button type="submit" id="submit">submit</button>
+   </form>
+</body>
+</html>

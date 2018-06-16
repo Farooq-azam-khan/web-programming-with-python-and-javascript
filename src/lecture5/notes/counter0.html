@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html>
+<head>
+   <title>counter0.html</title>
+   <script>
+      let counter = 0
+      function decrease_count()
+      {
+         counter--;
+         if (counter < 0)
+         {
+            counter=0
+         }
+         document.querySelector("#counter").innerHTML = counter; 
+      }
+      function increase_count()
+      {
+         counter++;
+         document.querySelector('#counter').innerHTML = counter;
+      }
+   </script>
+</head>
+<body>
+   <h1>counter0.html</h1>
+   <h2 id="counter">0</h2>
+   <button onclick="decrease_count()">decrement count</button>
+   <button onclick="increase_count()">increment count</button>
+</body>
+</html>

@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html>
+<head>
+   <title>colors3.html</title>
+   <script>
+      document.addEventListener("DOMContentLoaded", () => {
+         document.querySelector("#color-change").onchange = function() {
+            // console.log("changed color: " + this);
+            document.querySelector("#message").style.color = this.value;
+         };
+      });
+   </script>
+</head>
+<body>
+   <h1>colors3.html</h1>
+   <h1 id="message">Hello Colors</h1>
+   <select id="color-change">
+      <option value="black">Black</option>
+      <option value="red">Red</option>
+      <option value="green">Green</option>
+      <option value="blue">Blue</option>
+      <option value="purple">Purple</option>
+      <option value="yellow">Yellow</option>
+   </select>
+</body>
+</html>
