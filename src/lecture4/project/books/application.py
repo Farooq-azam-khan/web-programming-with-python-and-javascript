@@ -7,6 +7,38 @@ app.config['SQLALCHEMY_DATABASE_URI']  = 'sqlite:///publications.db'
 app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
 db = SQLAlchemy(app)
 
+class User(db.Model):
+    __tablename__ = 'users'
+    id = db.Column(db.String, primary_key=True)
+    name = db.Column(db.String, nullable=False)
+    email = db.Column(db.String, nullable=False, unique=True)
+    reviews = db.relationship('Review', backref='users', lazy=True)
+    
+    # TODO: to be implemented
+    def create_user(self, name, email, is_author):
+        pass
+        
+    def update_user(self, id):
+        pass
+    
+    def delete_user(self, id):
+        pass
+
+class Review(db.Model):
+    __tablename__ = 'reviews'
+    id = db.Column(db.Integer, priamry_key=True)
+    user_id = db.Column(db.Integer, db.FoerignKey('users.id', nullable=False))
+    book_id = db.Column(db.Integer, db.FoerignKey('books.id', nullable=False))
+    review_title = db.Column(db.String, nullable=False)
+    review_content = db.Column(db.String, nullable=False)
+    rating = db.Column(db.Integer, nullable=False)
+    
+    def create_review(self, user_id, book_id, review_title, review_content, rating):
+        pass
+        
+    def update_review(self, review_title, review_content, rating):
+        pass
+
 # TODO: create database
 class Book(db.Model):
     __tablename__ = 'books'
@@ -18,16 +50,21 @@ class Book(db.Model):
     year_published = db.Column(db.Integer, nullable=False)
     author_id = db.Column(db.Integer, db.ForeignKey('authors.id'), nullable=False)
     
+    def add_review():
+        # TODO: implement method
+        pass
+    
     def __repr__(self):
         return f'<Book {self.title}'
     
 class Author(db.Model):
     __tablename__ = 'authors'
     id = db.Column(db.Integer, primary_key=True)
-    f_name = db.Column(db.String, nullable=False)
-    l_name = db.Column(db.String, nullable=False)
-    email = db.Column(db.String, nullable=True)
-    books = db.relationship('Book', backref='author', lazy=True)
+    f_name  = db.Column(db.String, nullable=False)
+    l_name  = db.Column(db.String, nullable=False)
+    email   = db.Column(db.String, nullable=True)
+    bio     = db.Column(db.String, nullable=True)
+    books   = db.relationship('Book', backref='author', lazy=True)
     
     def add_book(self, title, year_published, subtitle='', summary='', publisher=''):
         b = Book(title=title, 
@@ -47,6 +84,19 @@ def index():
     authors = Author.query.all()
     books = Book.query.all()
     return render_template('index.html', authors=authors, books=books)
+
+@app.route('/register')    
+def register():
+    return '<h1> not yet implemented </h1>'
+
+@app.route('/login')
+@app.route('/signin')
+def login():
+    return '<h1> not yet implemented </h1>'
+
+@app.route('/signup')
+def signup():
+    return '<h1> not yet implemented </h1>'
     
 @app.route('/books')
 def books_list():
@@ -77,6 +127,10 @@ def create_book():
 def book_detail(book_id):
     book = Book.query.get(book_id)
     return render_template('book_detail.html', book=book)
+
+@app.route('/books/<int:book_id>/reviews')
+def book_reviews():
+    return '<h1> to be implemented </h1>'
     
 @app.route('/books/<int:book_id>/update', methods=['POST', 'GET'])
 def update_book(book_id):
@@ -135,6 +189,29 @@ def update_author(author_id):
         author.email = email
         db.session.commit()
     return render_template('update_author.html', author=author)
+
+
+@app.route('/reviews')
+def reviews_list():
+    return '<h1> to be implemented </h1>'
+    
+@app.route('/reviews/<int:review_id>')
+def review_detail():
+    return '<h1> to be implemented </h1>'
+    
+@app.route('/reviews/create')
+def create_review():
+    return '<h1> to be implemented </h1>'
+
+@app.route('/reviews/<int:review_id>/update')
+def update_review(review_id):
+    return '<h1> to be implemented </h1>'
+
+@app.route('/reviews/<int:review_id>/delete')
+def delete_review(review_id):
+    return '<h1> to be implemented </h1>'
+    
+
 
 if __name__ == '__main__':
     with app.app_context():
