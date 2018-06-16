@@ -1,0 +1,20 @@
+{% extends 'layout.html' %}
+{% block title %} update {{ review.title }} {% endblock title %}
+{% block content %}
+
+<h1>Update {{ review.title }}'s Information</h1>
+
+<form class="form-inline" action='{{ url_for('update_review', review_id=review.id) }}' method='post'>
+  <div class="form-group mb-2">
+    <input type="text" class="form-control" placeholder="title" value="{{ review.title }}" name="title">
+  </div>
+  <div class="form-group mb-2">
+    <input type="text" class="form-control" placeholder="content" value="{{ review.content }}" name="content">
+  </div>
+  <div class="form-group mb-2">
+    <input type="text" class="form-control" placeholder="rating" value="{{ review.rating }}" name="rating">
+  </div>
+  <button type="submit" class="btn btn-primary mb-2">Update Review</button>
+</form>
+
+{% endblock content %}
