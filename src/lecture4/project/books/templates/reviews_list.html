@@ -1,0 +1,22 @@
+{% extends 'layout.html' %}
+{% block title %} Reviews for {{ book.title }} {% endblock title %}
+
+{% block content %}
+<h1>{{ book.title }}</h1>
+{% if reviews %}
+<ul>
+{% for review in reviews %}
+   <li>
+      {{ review.title }} <br />
+      {{ review.content }} <br />
+      {{ review.rating }}      
+   </li>
+   <hr />
+{% endfor %}
+</ul>
+{% else %}
+<p>
+   There are no reviews for this page, <a href="#">add one</a>.
+</p>
+{% endif %}
+{% endblock content %}

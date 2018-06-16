@@ -1,3 +1,4 @@
+
 # ORM: Object-Relational Modeling
 - combines power of classes with sql databases
 - use webapp, thus Flask-SQLalchemy
@@ -115,3 +116,58 @@ ON flights.id = passengers.id
 ``` python
 db.session.query(Flight, Passenger).filter(flight.id == Passenger.flight_id).all()
 ```
+
+# APIs
+- JSON:
+  - easy for browsers to interact with json
+```JavaScript
+{
+  "origin": "Tokyo",
+  "destination": "Shaghai",
+  "duration": 185;
+  "passengers": ["Alice", "Bob"]
+}
+```
+- can nest objects
+``` JavaScript
+{
+  "origin": {
+    "city": "Tokyo",
+    "code": "HND"
+  },
+  "destination": {
+    "city": "Shanghai",
+    "code": "PGV"
+  },
+  "duration": 185,
+  "passengers": ["Alice", "Bob"]
+}
+```
+- can interact with the url, 
+`/flights/`, `/flights/28`, `/flights/28/passengers`, `/flights/28/passengers/6`
+## HTTP Methods
+- GET: retrieve resource
+- POST: create new resource
+- PUT: replace a resource
+- PATCH: update a resource
+- DELETE: delete a resource
+- can do this in python with request library (`pip install requests`)
+  - thus do the following: 
+  - `requests.get(url)`
+  - `requests.post(url)`
+  - `requests.put(url)`
+  - `requests.patch(url)`
+  - `requests.delte(url)`
+- STATUS CODES
+  - 2?? means sucess
+  - 200 OK
+  - 201 CREATED
+  - 4?? means an error
+  - 400 Bad Request
+  - 403 Forbidden
+  - 404 Not Found
+  - 405 Method Not Allowed
+  - 422 Unprocessable Entity
+
+## Make your own API
+- `airline4`

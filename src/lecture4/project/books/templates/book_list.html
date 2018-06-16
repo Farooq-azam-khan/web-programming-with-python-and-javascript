@@ -1,0 +1,24 @@
+{% extends 'layout.html' %}
+{% block title %} books {% endblock title %}
+{% block content %}
+
+<h1>Books</h1>
+{% if books %}
+<ul>   
+   {% for book in books %}
+      <li>
+         <a href="{{ url_for('book_detail', book_id=book.id) }}">{{ book.title }}, {{ book.subtitle }}</a>
+      </li>
+   {% endfor %}
+</ul>
+{% else %}
+<p>
+   There are no books to display.
+   <a href="{{ url_for('create_book') }}">
+      Add a book 
+   </a>
+</p>
+{% endif %}
+
+
+{% endblock content %}

@@ -1,0 +1,25 @@
+{% extends 'layout.html' %}
+{% block title %} authors {% endblock title %}
+{% block content %}
+
+<h1>Authors</h1>
+{% if authors %}
+<ul>   
+   {% for author in authors %}
+      <li>
+         <a href="{{ url_for('author_detail', author_id=author.id) }}">{{ author.f_name }}, {{ author.l_name }}</a>, 
+         <a href="#">{{ author.email }}</a>
+      </li>
+   {% endfor %}
+</ul>
+{% else %}
+<p>
+   There are no author to display.
+   <a href="{{ url_for('create_author') }}">
+      Add an Author
+   </a>.
+</p>
+{% endif %}
+
+
+{% endblock content %}

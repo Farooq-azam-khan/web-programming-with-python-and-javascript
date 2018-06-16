@@ -1,0 +1,21 @@
+{% extends 'layout.html' %}
+{% block title %} update {{ author.f_name }} {{ author.l_name }} {% endblock title %}
+{% block content %}
+
+<h1>Update {{ author.f_name }} {{ author.l_name }}'s Information</h1>
+
+<form class="form-inline" action='{{ url_for('update_author', author_id=author.id) }}' method='post'>
+  <div class="form-group mb-2">
+    <input value="{{ author.f_name }}" type="text" class="form-control" placeholder="f_name" name="f_name">
+  </div>
+  <div class="form-group mb-2">
+     
+    <input value="{{ author.l_name }}" type="text" class="form-control" placeholder="l_name" name="l_name">
+  </div>
+  <div class="form-group mb-2">
+    <input value="{{ author.email }}" type="text" class="form-control" placeholder="email" name="email">
+  </div>
+  <button type="submit" class="btn btn-primary mb-2">Update Author</button>
+</form>
+
+{% endblock content %}

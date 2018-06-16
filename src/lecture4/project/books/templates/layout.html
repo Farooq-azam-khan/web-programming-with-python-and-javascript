@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html>
+<head>
+   <title>{% block title %}{% endblock title %}</title>
+   <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
+</head>
+<body>
+
+   <!-- navigation -->
+   <ul class="nav justify-content-center">
+      <li class="nav-item">
+         <a class="nav-link active" href="{{ url_for('index') }}">Home</a>
+      </li>
+      <li class="nav-item">
+         <a class="nav-link" href="{{ url_for('books_list') }}">Books</a>
+      </li>
+      </li>
+      <li class="nav-item">
+         <a class="nav-link" href="{{ url_for('create_book') }}">Create Book</a>
+      </li>
+      <li class="nav-item">
+         <a class="nav-link" href="{{ url_for('authors_list') }}">Authors</a>
+      </li>
+      <li class="nav-item">
+         <a class="nav-link" href="{{ url_for('create_author') }}">Create Authors</a>
+      </li>
+      <li class="nav-item">
+         <a class="nav-link" href="{{ url_for('reviews_list') }}">Reviews</a>
+      </li>
+      <li class="nav-item">
+         <a class="nav-link" href="{{ url_for('create_review') }}">Create Review</a>
+      </li>
+      
+      
+   </ul>
+   
+   <div class="container">
+      {% block content %}{% endblock content %}
+   </div>
+</body>
+</html>
