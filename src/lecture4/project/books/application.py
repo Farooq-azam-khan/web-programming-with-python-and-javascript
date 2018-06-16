@@ -1,4 +1,4 @@
-from flask import Flask, render_template, request
+from flask import Flask, render_template, request, jsonify
 from flask_sqlalchemy import SQLAlchemy
 
 # TODO: remove the author_id=1 and add the proper code of any author
@@ -211,7 +211,52 @@ def update_review(review_id):
 def delete_review(review_id):
     return '<h1> to be implemented </h1>'
     
+# TODO: Implement your own api (jsonify)
+@app.route('/api')
+def api():
+    return 'to be implemented'
+    
+@app.route('/api/users')
+def api_users():
+    return 'to be implemented: will return list of users'
 
+@app.route('/api/users/<string:user_email>')
+def api_user(user_email):
+    return 'to be implemented'
+
+@app.route('/api/users/<string:user_email>/reviews')
+def api_user_reviews(user_email):
+    return 'to be implemented: return list of review of user'
+
+@app.route('/api/users/<string:user_email/review/<int:review_id>')
+def api_user_review(user_email, review_id):
+    return 'to be implemented: return user\'s particular review'
+
+@app.route('/api/reviews')
+def api_reviews():
+    return 'to be implemented: return list of reivewis'
+    
+@app.route('/api/reviews/<int:review_id>')
+def api_review(review_id):
+    return 'TODO: return particular review'
+    
+@app.route('/api/authors')
+def api_authors():
+    return 'TODO: return authors'
+
+@app.route('/api/books')
+def api_books():
+    return 'todo: return books'
+    
+# more api links 
+'''
+/api/authors/<int:author_id>/books
+/api/authors/<int:author_id>/books/<int:book_id>
+/api/authors/<int:author_id>/books/<int:book_id>/reviews
+/api/books/<int:book_id>
+/api/books/<int:book_id>/reviews
+...
+'''
 
 if __name__ == '__main__':
     with app.app_context():
