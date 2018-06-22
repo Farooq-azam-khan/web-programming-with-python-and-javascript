@@ -2,3 +2,9 @@
 */__pycare__/*
 ./tcl/
 ./Include/
+*.h
+*/Include/*
+/Lib/
+/Scripts/*
+/pip-selfcheck.json
+/tcl/*

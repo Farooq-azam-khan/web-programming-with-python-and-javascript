@@ -28,3 +28,6 @@ function hello()
 - `() => { alert('hw')}`
   - es6's way of writing functions
   - eg `x => { x*2}`, if only one line `x => x*2`
+  
+# AJAX
+- get infor from server without reloading a page

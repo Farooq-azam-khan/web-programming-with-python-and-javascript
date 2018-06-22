@@ -1,0 +1,11 @@
+<!DOCTYPE html>
+<html>
+<head>
+   <title>{{ title }}</title>
+   <script src="{{ url_for('static', filename='index.js')}}"></script>
+</head>
+<body>
+   <!-- <script>console.log('hw')</script> -->
+   {% block content %}{% endblock content %}
+</body>
+</html>

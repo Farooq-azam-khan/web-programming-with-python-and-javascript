@@ -4,31 +4,34 @@
    <title>task1.html</title>
    <script>
       document.addEventListener("DOMContentLoaded", function() {
-         document.getElementById('submit').disable = true;
-         console.log('sumit disabled')
-         document.querySelector('#task').onkeyup = function() {
-            document.querySelector('#submit').disable = false;
-            console.log('keyup detcted and submit enabled');
-         };
-         document.querySelector('#new-task').onsubmit = function() {
+         // disable button after load page
+         document.querySelector('#submit').disabled = true; 
+         
+         // enable button on key up
+         document.querySelector('#task').onkeyup = () => {
+            document.querySelector('#submit').disabled = false; 
+         }
+         
+         document.querySelector('#new-task').onsubmit = () => {
             const li = document.createElement('li');
-            li.innerHTML = document.querySelect('#task').value;
+            li.innerHTML = document.querySelector('#task').value;
             document.querySelector('#tasks').append(li);
-            // document.querySelect('#task') = '';
-            // document.querySelect('#submit') = true; 
+            document.querySelector('#task').value = ''; 
+            // disable button after submitting
+            document.querySelector('#submit').disabled = true; 
             return false; 
          }         
-      }) 
+      });
    </script>
 </head>
 <body>
    <h1>Task1.html</h1>
    <h1>Task</h1>
-   <ul id="tasks"></ul>
    <form id="new-task">
-      <input id="task" autocomplete="off" atuofocus type="text" placeholder="New Task" />
+      <input id="task" value='' autocomplete="off" atuofocus type="text" placeholder="New Task" />
       <!-- <input type="submit" id="submit" /> -->
       <button type="submit" id="submit">submit</button>
    </form>
+   <ul id="tasks"></ul>
 </body>
 </html>

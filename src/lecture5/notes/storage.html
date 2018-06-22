@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+   <title>storage.html</title>
+   <script>
+         if (!localStorage.getItem('counter'))
+         {
+            console.log('added counter to local storage');
+            localStorage.setItem('counter',0);
+         }
+         
+         document.addEventListener('DOMContentLoaded', () => {
+            // console.log("content loaded")
+            // console.log(document.querySelector('#counter').innerHTML);
+            // console.log(localStorage.getItem('counter'));
+            document.querySelector('#counter').innerHTML = localStorage.getItem('counter');
+            
+            
+            document.querySelector('button').onclick = () => {
+               let counter = localStorage.getItem('counter');
+               counter++; 
+               console.log('coutner: ' + counter);
+               
+               document.querySelector('#counter').innerHTML = counter; 
+               localStorage.setItem('counter', counter); // set the value of the new counter
+               return false; 
+            }
+         });
+         
+   </script>
+</head>
+<h1 id="counter">0</h1>
+<button>click here</button>
+</html>

@@ -1,0 +1,17 @@
+<!DOCTYPE html>
+<html>
+<head>
+   <title>{{ title }}</title>
+   <script src="{{ url_for('static', filename='index.js') }}"> </script>
+</head>
+<body>
+   <h1>This is checking AJAX</h1>
+   <form id="form">
+      <input id="currency" autocomplete="off" placeholder="currency" type="text" />
+      <input type="submit" value="Get Exchange Rate" />
+   </form>
+   <div id="result">
+      
+   </div>
+</body>
+</html>
