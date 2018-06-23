@@ -2,13 +2,14 @@
 <html>
 <head>
    <title>{{ title }}</title>
+   <META HTTP-EQUIV="PRAGMA" CONTENT="NO-CACHE">
    <script src="{{ url_for('static', filename='index.js') }}"> </script>
 </head>
 <body>
    <h1>This is checking AJAX</h1>
    <form id="form">
       <input id="currency" autocomplete="off" placeholder="currency" type="text" />
-      <input type="submit" value="Get Exchange Rate" />
+      <button id="sub">submit</button>
    </form>
    <div id="result">
       

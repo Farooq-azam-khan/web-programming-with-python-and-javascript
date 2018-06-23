@@ -30,4 +30,5 @@ function hello()
   - eg `x => { x*2}`, if only one line `x => x*2`
   
 # AJAX
-- get infor from server without reloading a page
+- get info from server without reloading a page
+- `./currency/`
