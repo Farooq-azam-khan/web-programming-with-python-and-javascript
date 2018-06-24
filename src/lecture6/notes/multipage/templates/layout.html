@@ -1,0 +1,23 @@
+<!DOCTYPE html>
+<html>
+<head>
+   <title>{% if title %} {{ title }} {% endif %}</title>
+</head>
+<body>
+   <nav>
+      <ul>
+         <li>
+            <a href="{{ url_for('index')}}">index</a>
+         </li>
+         <li>
+            <a href="{{ url_for('second') }}">second</a>
+         </li>
+         <li>
+            <a href="{{ url_for('third') }}">third</a>
+         </li>
+      </ul>
+   </nav>
+   <hr />
+   {% block content %}{% endblock content %}
+</body>
+</html>

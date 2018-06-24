@@ -1,0 +1,95 @@
+<!DOCTYPE html>
+<html>
+<head>
+   <title>posts1</title>
+   
+   <style> 
+      .post { 
+         background-color: rgb(10, 200, 10, 10);
+         margin: 10px 0px;  
+         padding: 10px 0px; 
+      }
+      body {
+         padding-bottom: 50px; 
+      }
+      button {
+         color: rgb(200, 200, 200); 
+         background: rgb(10, 10, 100, 20);
+         margin-left: 100px; 
+         padding: 10px; 
+      }
+   </style>
+   
+   <script>
+   let counter = 1; // start with post 1
+   const quantity = 20; // load 20 at a time
+   
+   // when dom contents are loaded then load 20 posts
+   document.addEventListener("DOMContentLoaded", load); 
+   
+   // if scrolled to bottom then load another 20 
+   window.onscroll = () => {
+      if(window.innerHeight + window.scrollY >= document.body.offsetHeight)
+      {
+         // console.log('loading posts'); 
+         load(); 
+      }
+   };   
+   
+   function load() {
+      
+      // start and end number of posts
+      const start = counter; 
+      const end = start + quantity - 1
+      counter = end + 1; 
+      // console.log('start: ' + start); 
+      // console.log('end: ' + end); 
+      
+      // ajax request
+      const request = new XMLHttpRequest();
+      // console.log('request: ' + request); 
+      request.open('POST', '/posts'); 
+      // console.log('open request: ' + request.open('POST', '/posts'))
+      // console.log('request made to /posts')
+      request.onload = () => {
+         // console.log('loaded'); 
+         const data = JSON.parse(request.responseText); 
+         // console.log('data: ' + data); 
+         data.forEach(add_post); 
+      }; 
+      
+      // add start and end ponits to request
+      const data = new FormData(); 
+      data.append('start', start); 
+      data.append('end', end); 
+      
+      // send request
+      request.send(data); 
+   }
+   
+   // when request comes back this function runs
+   function add_post(contents) {
+      // create new post
+      const post = document.createElement('div'); 
+      post.className = 'post'; 
+      post.innerHTML = contents; 
+      
+      // Add button to hide post
+      const hide = document.createElement('button'); 
+      hide.className = 'hide'; 
+      hide.innerHTML = 'Hide'; 
+      post.append(hide); 
+      
+      // when clicked then remove the hide button's parent elemnt ie the post div
+      hide.onclick = function() {
+         this.parentElement.remove(); 
+      }
+      // add to dom
+      document.querySelector('#posts').append(post); 
+   }; 
+   </script>
+</head>
+<body>
+   <div id="posts"></div>
+</body>
+</html>
