@@ -1,0 +1,13 @@
+{% extends 'layout.html' %}
+{% block content %}
+<h1>Voting App: v0.0</h1>
+
+<ul id="votes">
+</ul>
+<hr />
+<input type="text" id='name' value='' placeholder="name" name="name" />
+<input type='text' id='message' value='' placeholder='message' name="message" />
+<button data-vote="yes">Yes</button>
+<button data-vote="no">No</button>
+<button data-vote="maybe">Maybe</button>
+{% endblock content %}

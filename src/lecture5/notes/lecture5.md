@@ -32,3 +32,9 @@ function hello()
 # AJAX
 - get info from server without reloading a page
 - `./currency/`
+
+# Web Sockets
+- `Socket.IO`
+- talking between server and client is request/response model
+- chatroom application 
+  - `/vote0/`
