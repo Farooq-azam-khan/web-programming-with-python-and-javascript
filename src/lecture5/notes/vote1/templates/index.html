@@ -1,0 +1,11 @@
+{% extends 'layout.html' %}
+{% block content %}
+<h1>Votes: v1.0</h1>
+<div>Yes Votes: <span id="yes">{{ votes['yes'] }}</span></div>
+<div>No Votes: <span id="no">{{ votes['no'] }}</span></div>
+<div>Maybe Votes: <span id="maybe">{{ votes['maybe'] }}</span></div>
+<hr />
+<button data-vote="yes">Yes</button>
+<button data-vote="no">No</button>
+<button data-vote="maybe">Maybe</button>
+{% endblock content %}
