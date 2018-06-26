@@ -1,6 +1,7 @@
 <!DOCTYPE html>
 <html>
 <head>
+   <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
    <link rel="stylesheet" href="main.css" />
    <title>NewsRUS | News Website</title>
 </head>
@@ -15,18 +16,18 @@
    </nav>
    <h1>NewsRUS</h1>
    <h2>Schedule</h2>
-   <table>
+   <table class="table table-dark">
       <thead>
-         <th>
-            <td>Anchor</td>
-            <td>Day</td>
-            <td>Time</td>
-            <!-- <td>Channel</td> -->
-         </th>
+         <tr>
+            <th scope="col">Anchor</th>
+            <th scope="col">Day</th>
+            <th scope="col">Time</th>
+            <th scope="col">Channel</th>
+         </tr>
       </thead>
       <tbody>
          <tr>
-            <td>Steve Robers</td>
+            <td scope="row">Steve Robers</td>
             <td>Mondays</td>
             <td>10:00:00 PM</td>
             <td>Channel 10</td>
