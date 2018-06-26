@@ -11,11 +11,7 @@ body {
   margin: 0.2em; 
   padding: 0.4em; 
 }
-div, .content {
-  background: #F3F3; 
-  padding: 10px; 
-  margin: 0.4em; 
-}
+
 h1, h2 {
   text-align: center; 
 }
@@ -39,13 +35,7 @@ td, th {
   border: 1px solid #CCC; 
 }
 
-#article_title {
-  
-}
 
-.article_content {
-  
-}
 
 nav {
   margin: 0; 
@@ -74,3 +64,13 @@ ul, .nav_ul {
   padding: 0; 
 }
 
+
+/* Media Queries for smaller screen */
+@media(max-width: 499px)
+{
+  body
+  {
+    font-size: 15px; 
+  }
+  
+}

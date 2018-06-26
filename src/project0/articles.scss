@@ -1,0 +1,40 @@
+%main_style
+{
+  font-family: Helvatica, sans-serif; 
+  font-size: 12px; 
+  text-align: justify; 
+  padding: 0.5em; 
+  margin: 0.4em; 
+}
+
+div 
+{
+  .content {
+    background: #F3F3; 
+    padding: 10px; 
+    margin: 0.4em; 
+  }
+  @extend %main_style; 
+  font-size: 18px; 
+  p
+  {
+    font-size: 12px; 
+  }
+}
+
+%title {
+  font-size: 20px; 
+  text-align: center; 
+  margin: 0.4em; 
+  padding: 0.4em; 
+  font-family: Helvetica, sans-serif; 
+}
+#article_title {
+  @extend %title;
+  background: #fff2; 
+}
+
+.article_content {
+  @extend %title;
+  background: #ffa3; 
+}
