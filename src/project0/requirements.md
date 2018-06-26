@@ -7,3 +7,6 @@
 - You must use Bootstrap 4 on your website, taking advantage of at least one Bootstrap component, and using at least two Bootstrap columns for layout purposes using Bootstrap’s grid model.
 - Your stylesheets must use at least one SCSS variable, at least one example of SCSS nesting, and at least one use of SCSS inheritance.
 - In README.md, include a short writeup describing your project, what’s contained in each file, and (optionally) any other additional information the staff should know about your project.
+
+# README
+- The website that I made is one for a news organization named NewsRUS. The purpose of this website is to provide information about the organization tv schedule and some of the articles written by their prestigious writers. There are also sections regard what the organization stands for and how to reach the people involved NewsRUS. 
