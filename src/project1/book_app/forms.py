@@ -1,9 +1,16 @@
 from flask_wtf import FlaskForm
-from wtforms import StringField, PasswordField, SubmitField, BooleanField
+from wtforms import StringField, IntegerField, PasswordField, SubmitField, BooleanField
 from wtforms.validators import DataRequired, Length, Email, EqualTo, ValidationError
 # models
 from book_app.models import User
 
+
+class ReviewForm(FlaskForm):
+    title = StringField('title', validators=[DataRequired()])
+    content = StringField('explination', validators=[DataRequired()])
+    rating = IntegerField('rating', validators=None)
+    submit = SubmitField('write')
+    
 class SearchBookForm(FlaskForm):
     search = StringField('book info', validators=[DataRequired(), Length(min=2)])
     submit = SubmitField('search')

@@ -7,27 +7,30 @@ def load_user(user_id):
     return User.query.get(int(user_id))
 
 class Book(db.Model):
-    __table_name__ = 'books'
+    __tablename__ = 'books'
     id = db.Column(db.Integer, primary_key=True)
     isbn = db.Column(db.Integer, unique=True)
     title = db.Column(db.String, nullable=False)
     author = db.Column(db.String, nullable=False)
     publication_year = db.Column(db.String, nullable=False)
     averate_rating = db.Column(db.Integer, nullable=True)
-    publisher = db.Column(db.String, nullalbe=True)
+    publisher = db.Column(db.String, nullable=True)
     
     def to_dict(self):
         return {
-        'id': self.id,
-        'isbn': self.isbn,
-        'title': self.title, 
-        'author': self.author
+        "id": self.id,
+        "isbn": self.isbn,
+        "title": self.title, 
+        "author": self.author, 
+        'publication_year': self.publication_year,
+        "publisher": self.publisher
         }
 
 class Review(db.Model):
+    __tablename__ = 'reviews'
     id = db.Column(db.Integer, primary_key=True)
     book_id = db.Column(db.Integer, db.ForeignKey('books.id'), nullable=False)
-    user_id = db.Column(db.Integer, db.FeorignKey('authors.id'), nullable=False)
+    user_id = db.Column(db.Integer, db.ForeignKey('users.id'), nullable=False)
     title = db.Column(db.String, nullable=False)
     content = db.Column(db.String, nullable=False)
     rating = db.Column(db.Integer, nullable=False)
@@ -41,4 +44,3 @@ class User(db.Model, UserMixin):
     
     def __repr__(self):
         return f"User< {self.username} {self.id}>"
-        

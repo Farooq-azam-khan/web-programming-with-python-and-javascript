@@ -5,7 +5,10 @@
 {% if books %}
 <ul>
 {% for book in books %}
-<li><a href="#">{{ book.title }}, {{ book.author }}, {{ book.isbn }}</a>
+<li><a href="{{ url_for('book', book_id=book.id) }}">{{ book.title }} by {{ book.author }} ({{ book.isbn }})</a>, 
+   {% if current_user.is_authenticated %} write a <a href="{{ url_for('create_review', book_id=book.id)}}">review</a> {% else %} 
+   <a href="{{ url_for('register') }}">register</a> or <a href="{{ url_for('login') }}">login</a> to write a reivew.
+   {% endif %}.
 </li>
 {% endfor %}
 </ul>
