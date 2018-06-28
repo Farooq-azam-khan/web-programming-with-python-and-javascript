@@ -1,0 +1,17 @@
+{% extends 'layout.html' %}
+{% block content %}
+
+<h1> Books </h1>
+{% if books %}
+<ul>
+{% for book in books %}
+<li><a href="#">{{ book.title }}, {{ book.author }}, {{ book.isbn }}</a>
+</li>
+{% endfor %}
+</ul>
+{% else %}
+<p>
+   No books to display. 
+</p>
+{% endif %}
+{% endblock content %}

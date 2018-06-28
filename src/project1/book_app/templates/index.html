@@ -1,0 +1,39 @@
+{% extends 'layout.html' %}
+{% block content %}
+
+{% if current_user.is_authenticated %}
+<h1>Welcome, {{ current_user.username }}</h1>
+{% else %}
+<h1>Welcome to the index of this page</h1>
+{% endif %}
+<p>
+   Provite an ISBN, author name, or title to get infor about that book.
+   
+   <form action="" method="POST" class="form-inline my-2 my-lg-0"> {{ form.hidden_tag() }}
+      {% if form.search.errors %}
+          {{ form.search(class="form-control form-control-lg is-invalid") }}
+          <div class="invalid-feedback">
+              {% for error in form.search.errors %}
+                 <span>{{ error }}</span>
+              {% endfor %}
+          </div>
+      {% else %}
+          {{ form.search(class="form-control form-control-lg") }}
+      {% endif %}
+     <button class="btn btn-outline-success my-2 my-sm-0" type="submit">Search</button>
+   </form>
+</p>
+
+{% if books %}
+{% for book in books %}
+<ul>
+   <li><a href="#">{{ book.title }} by {{ book.author }} (ISBN: {{ book.isbn }})</a></li>
+</ul>
+{% endfor %}
+{% else %}
+<p>
+   No Books to search. 
+</p>
+{% endif %}
+
+{% endblock content %}
