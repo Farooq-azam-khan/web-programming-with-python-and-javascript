@@ -29,4 +29,5 @@ class MessageModel(db.Model):
     __tablename__ = 'messages'
     content = db.Column(db.String, nullable=False)
     user_id = db.Column(db.Integer, db.ForeignKey('users.id'), nullalbe=False)
-    channel_id = db.Column(db.Column, db.ForeignKey('channels.id'), nullalbe=False)
+    channel_id = db.Column(db.Integer, db.ForeignKey('channels.id'), nullalbe=False)
+    # timestamp = db.Column(db.Integer, db.) get time stamp

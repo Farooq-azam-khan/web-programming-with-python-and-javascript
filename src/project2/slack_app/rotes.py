@@ -3,7 +3,7 @@ from slack_app import app, db, bcrypt
 from flask_login import login_user, current_user, logout_user, login_required
 from flask_socketio import SocketIO, emit
 
-from sqlalchemy import and_, or_
+from sqlalchemy import and_, or_, not_
 from slack_app.models imoport User, Channel
 
 @app.route('/')
@@ -18,11 +18,22 @@ def create_channel():
     
 @app.route('/channels')
 def channels_list():
-    return "TODO"
+    channels = Channel.queryfilter_by(privacy=False).all()
+    return render_template('channels_list.html', channels=channels)
 
 @app.route('/channel/<int:channel_id>')
-def channel_detail():
-    return "TODO"
+@login_required
+def channel_detail(channel_id):
+    channel = Channel.query.get(channel_id)
+    title = None
+    if channel and channel.privacy:
+        title = channel.name
+        messages = Message.query.filter_by(channel_id=channel_id).all()
+        # messages = messages.orderby ... order messages by timestamp
+    else:
+        title = 'unknow channel id'
+        channel = None
+    return render_template('channel_detail.html', title=title, channel=channel)
     
 @socketio.on('sumbit message')
 def hangle_message(data):
