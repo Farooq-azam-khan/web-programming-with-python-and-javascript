@@ -1,0 +1,26 @@
+{% extends 'layout.html' %}
+{% block content %}
+{% if book %}
+<h1>Book {{ book.title }}</h1>
+{% else %}
+<p>
+   Cannot find book.
+</p>
+
+   {% if reviews %}
+   <hr />
+   <h1>Reviews</h1>
+   {% for review in reviews %}
+   <li>
+      <h3>{{ review.title }}, {{ review.rating }}</h3>
+      <p>
+         {{ review.content }}
+      </p>
+   </li>
+   {% endfor %}
+   {% endif %}
+{% endif %}
+<p>
+   Book does not exist. 
+</p>
+{% endblock content %}

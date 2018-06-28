@@ -12,7 +12,25 @@ class Book(db.Model):
     isbn = db.Column(db.Integer, unique=True)
     title = db.Column(db.String, nullable=False)
     author = db.Column(db.String, nullable=False)
+    publication_year = db.Column(db.String, nullable=False)
+    averate_rating = db.Column(db.Integer, nullable=True)
+    publisher = db.Column(db.String, nullalbe=True)
     
+    def to_dict(self):
+        return {
+        'id': self.id,
+        'isbn': self.isbn,
+        'title': self.title, 
+        'author': self.author
+        }
+
+class Review(db.Model):
+    id = db.Column(db.Integer, primary_key=True)
+    book_id = db.Column(db.Integer, db.ForeignKey('books.id'), nullable=False)
+    user_id = db.Column(db.Integer, db.FeorignKey('authors.id'), nullable=False)
+    title = db.Column(db.String, nullable=False)
+    content = db.Column(db.String, nullable=False)
+    rating = db.Column(db.Integer, nullable=False)
     
 class User(db.Model, UserMixin):
     __tablename__ = 'users'

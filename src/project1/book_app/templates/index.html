@@ -7,9 +7,9 @@
 <h1>Welcome to the index of this page</h1>
 {% endif %}
 <p>
-   Provite an ISBN, author name, or title to get infor about that book.
+   Provite an ISBN, author name, or title to get information about that book.
    
-   <form action="" method="POST" class="form-inline my-2 my-lg-0"> {{ form.hidden_tag() }}
+   <form id="search_form" action="" method="POST" class="form-inline my-2 my-lg-0"> {{ form.hidden_tag() }}
       {% if form.search.errors %}
           {{ form.search(class="form-control form-control-lg is-invalid") }}
           <div class="invalid-feedback">
@@ -18,22 +18,57 @@
               {% endfor %}
           </div>
       {% else %}
-          {{ form.search(class="form-control form-control-lg") }}
+          {{ form.search(id="search", class="form-control form-control-lg") }}
       {% endif %}
      <button class="btn btn-outline-success my-2 my-sm-0" type="submit">Search</button>
    </form>
 </p>
 
-{% if books %}
-{% for book in books %}
-<ul>
-   <li><a href="#">{{ book.title }} by {{ book.author }} (ISBN: {{ book.isbn }})</a></li>
-</ul>
-{% endfor %}
-{% else %}
-<p>
-   No Books to search. 
-</p>
-{% endif %}
 
+<div id="book_div">
+   <ul id="books">
+      
+   </ul>
+</div>
+
+<script>
+document.addEventListener("DOMContentLoaded", () => {
+   document.querySelector("#search_form").onsubmit = () => {
+      const request = new XMLHttpRequest(); 
+      const search_query = document.querySelector("#search").value; 
+      request.open("POST", '/search'); 
+      request.onload = () => {
+         document.querySelector('#books').innerHTML = ''; 
+         const data = JSON.parse(request.responseText); 
+         const books = data.books; 
+         
+         if (books) {
+            // get reference to each book returned
+            for (let i=0;i<books.length;i++)
+            {
+               const book_li = document.createElement('li')
+               const book_a = document.createElement('a')
+               
+               const title = books[i].title; 
+               const author = books[i].author; 
+               const isbn = books[i].isbn; 
+               
+               // define the anchr element
+               book_a.href = '#';
+               book_a.innerHTML = title + ' by ' + author + ' (ISBN ' + isbn + ')'; 
+               book_li.append(book_a); // add it to the li 
+               
+               document.querySelector("#books").append(book_li) // add list item to div tag
+            }
+         }
+         
+      }
+      // send the data from the form 
+      const data = new FormData(); 
+      data.append('search_query', search_query); 
+      request.send(data); 
+      return false; // do not refresh page
+   };
+});
+</script>
 {% endblock content %}

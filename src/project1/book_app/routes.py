@@ -1,4 +1,4 @@
-from flask import render_template, url_for, request, redirect
+from flask import render_template, url_for, request, redirect, jsonify
 from book_app import app, db, bcrypt
 from book_app.forms import RegistrationForm, LoginForm, SearchBookForm
 from flask_login import login_user, current_user, logout_user, login_required
@@ -12,22 +12,47 @@ from book_app.models import User, Book
 @app.route('/home', methods=['POST', 'GET'])
 def home():
     title = 'home'
-    
     form = SearchBookForm()
     books = None
     if form.validate_on_submit():
         search_data = form.search.data
+        print('search_data:', form.search)
         # Book.query.filter(Book.title.like('%'+search_data+'%')).all()
         search_like = '%'+search_data+'%'
         books = Book.query.filter(or_(Book.author.like(search_like), Book.title.like(search_like))).all()
-    return render_template('index.html', title=title, form=form, books=books)
+
+    return render_template('index.html', title=title, form=form)
+
+@app.route('/search', methods=['POST'])
+def search():
+    search_data = request.form.get('search_query')
+    print('data:', search_data)
+    search_like = '%'+search_data+'%'
+    books = Book.query.filter(or_(Book.author.like(search_like), Book.title.like(search_like))).all()
+    print(books)
+    books_json = []
+    for book in books: 
+        book_json = {
+            "id": book.id, 
+            "title": book.title, 
+            "isbn": book.isbn, 
+            "author": book.author
+        }
+        books_json.append(book_json)
+    data = {'books':books_json}
+    return jsonify(data)
 
 @app.route('/books')
 def books():
     title = 'books'
     books = Book.query.all()
     return render_template('books.html', books=books, title=title)
-    
+
+@app.route('/book/<int:book_id>')
+def book(book_id):
+    book = Book.query.get(book_id)
+    title = 'book ' + str(book)
+    return render_template('book_detail.html', title=title, book=book)
 @app.route('/register', methods=['GET', 'POST'])
 def register():
     title = 'register'
@@ -75,3 +100,14 @@ def account():
 @app.route('/about')
 def about():
     return "<h1> About Page </h1>"
+    
+@app.route('/write_review')
+@login_requred
+def write_review():
+    return 'todo'
+
+@app.route('/update_review/<int:review_id>')
+@login_required
+def update_review():
+    return 'todo'
+
