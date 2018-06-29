@@ -1,8 +1,9 @@
-from datatime import datetime
+from datetime import datetime
 from slack_app import db, login_manager
 from flask_login import UserMixin
 
-@login_manager.user_loaded
+
+@login_manager.user_loader
 def load_user(user_id):
     return User.query.get(int(user_id))
 
