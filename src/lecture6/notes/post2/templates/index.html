@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<html>
+<head>
+   <title>posts2</title>
+   <style>
+      .hide {
+         float: right; 
+      }
+      .post {
+         background-color: #77dd11; 
+         padding: 20px; 
+         margin: 10px; 
+      }
+      body {
+         padding-bottom: 50px; 
+      }
+   </style>
+   <script src="https://cdnjs.cloudflare.com/ajax/libs/handlebars.js/4.0.11/handlebars.min.js"></script>
+   <script id="post" type="text/x-handlebars-template">
+      <div class="post">
+         {% raw -%}
+            {{ contents }}
+         {%- endraw %}
+         <button class="hide">Hide</button>
+      </div>
+   </script>
+   <script>
+      let counter = 1; 
+      const quantity = 20; 
+      // load posts when window loaded
+      document.addEventListener('DOMContentLoaded', load); 
+      
+      // load posts reach end of screen 
+      window.onscroll = () => {
+         if (window.innerHeight + window.scrollY >= document.body.offsetHeight) {
+            load(); 
+         }
+      };  
+      
+      // remove if hide button clicked
+      document.addEventListener('click', event => {
+         const element = event.target; 
+         if (element.className === 'hide') {
+            element.parentElement.remove(); 
+         }
+      });     
+      
+      // load next set of posts
+      function load() {
+         // range for next set of posts
+         const start = counter; 
+         const end = start + quantity - 1; 
+         counter = end + 1; 
+         
+         // request for next set of posts
+         const request = new XMLHttpRequest(); 
+         request.open('POST', '/posts'); 
+         request.onload = () => {
+            const data = JSON.parse(request.responseText); 
+            data.forEach(add_post); 
+         }
+         const data = new FormData(); 
+         data.append('start', start); 
+         data.append('end', end); 
+         
+         // send data to server 
+         request.send(data); 
+      }; 
+      
+      const post_template = Handlebars.compile(document.querySelector('#post').innerHTML); 
+      function add_post(contents) {
+         const post = post_template({'contents':contents}); // new post template
+         document.querySelector('#posts').innerHTML += post; // add to dom 
+      }
+   </script>
+   
+</head>
+<body>
+   <h1>Posts</h1>
+   <div id="posts"></div>
+</body>
+</html>
