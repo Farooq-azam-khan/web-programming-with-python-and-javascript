@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html>
+<head>
+   <title>dice2</title>
+   <style>
+       li {
+           line-height: 30px;
+       }
+       img {
+           height: 30px;
+           vertical-align: middle;
+       }
+   </style>
+   <script src="https://cdnjs.cloudflare.com/ajax/libs/handlebars.js/4.0.11/handlebars.min.js"></script>
+   <script id="result" type="text/x-handlebars-template">
+      <li>
+         You rolled: 
+         <img alt="{{ value }}" title="{{ value }}" src="img/{{ value }}.png" />
+      </li>
+   </script>
+   <script>
+      const template = Handlebars.compile(document.querySelector('#result').innerHTML); 
+      document.addEventListener('DOMContentLoaded', () => {
+         document.querySelector('#roll').onclick = () => {
+            const roll = Math.floor((Math.random()*6)+1);
+            const content = template({'value': roll});
+            document.querySelector('#rolls').innerHTML += content; 
+         }
+      }); 
+   </script>
+</head>
+<body>
+   <button id="roll">Roll</button>
+   <ul id="rolls"></ul>
+</body>
+</html>

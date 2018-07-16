@@ -1,0 +1,24 @@
+<!DOCTYPE html>
+<html>
+<head>
+   <title>dice1</title>
+   <script src="https://cdnjs.cloudflare.com/ajax/libs/handlebars.js/4.0.11/handlebars.min.js"></script>
+   <script>
+   const template = Handlebars.compile("<li> You rolled: <img src='img/{{ value }}.png' /></li>");
+   document.addEventListener('DOMContentLoaded', () => {
+      document.querySelector('#roll').onclick = () => {
+         const roll = Math.floor(Math.random()*6 + 1); 
+         const content = template({'value':roll}); 
+         document.querySelector("#rolls").innerHTML += content; 
+      }
+      
+   });
+   </script>
+</head>
+<body>
+   <button id="roll">Roll</button>
+   <ul id="rolls">      
+   </ul>
+   
+</body>
+</html>
