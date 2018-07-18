@@ -11,3 +11,4 @@
 - see: `airline1/test.py`
 - `python manage.py test`
 - should also test templates in django as well, see: `airline2/`
+- 'Client' class will simulate a client
