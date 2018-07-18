@@ -6,3 +6,8 @@
   
 ## unittest module
 - see: `test1.py`
+
+## test.py file in django
+- see: `airline1/test.py`
+- `python manage.py test`
+- should also test templates in django as well, see: `airline2/`
