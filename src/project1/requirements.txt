@@ -17,7 +17,7 @@ Jinja2==2.10
 MarkupSafe==1.0
 pycparser==2.18
 python-engineio==2.1.1
-python-socketio==1.9.0
+python-socketio==5.14.0
 pytz==2018.4
 requests==2.19.1
 six==1.11.0
